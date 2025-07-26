@@ -12,6 +12,7 @@ export const getProductsController = async (req, res) => {
 
 export const getProductByIdController = async (req, res, next) => {
   const { productId } = req.params;
+  console.log(productId);
   const data = await productServices.getProductById(productId);
   res.json({
     status: 200,
@@ -21,7 +22,7 @@ export const getProductByIdController = async (req, res, next) => {
 };
 
 export const addProductController = async (req, res, next) => {
-  const data = await productServices.addContact(req.body);
+  const data = await productServices.addProduct(req.body);
 
   res.status(201).json({
     status: 201,
@@ -42,4 +43,13 @@ export const patchProductController = async (req, res, next) => {
     message: "Successfully patched a product!",
     data: result.data
   });
+};
+
+export const deleteProductController = async (req, res) => {
+  const { productId: _id } = req.params;
+  const data = await productServices.deleteProduct({ _id });
+  if (!data) {
+    throw createHttpError(404, `Contact not found`);
+  }
+  res.status(204).send();
 };

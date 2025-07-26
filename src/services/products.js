@@ -4,7 +4,7 @@ export const getProducts = () => Product.find();
 
 export const getProductById = id => Product.findById(id);
 
-export const addContact = payload => Product.create(payload);
+export const addProduct = payload => Product.create(payload);
 
 export const updateProduct = async ({_id, payload, options = {}}) => {
     const rawResult = await Product.findOneAndUpdate({_id}, payload, {...options, new: true, includeResultMetadata: true});
@@ -15,3 +15,6 @@ export const updateProduct = async ({_id, payload, options = {}}) => {
         isNew: Boolean(rawResult?.lastErrorObject?.upserted)
     };
 };
+
+export const deleteProduct = (filter) =>
+  Product.findOneAndDelete(filter);
